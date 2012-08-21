@@ -1,7 +1,7 @@
 {
 "author": "Johann Philipp Strathausen <strathausen@gmail.com> (http://strathausen.eu)",
   "name": "yamlmarkdown",
-  "description": "Yaml annotated markdown. Losely compatible to the nest django cms format.",
+  "description": "Yaml annotated markdown. A subset of the nest django cms format.",
   "version": "0.0.1",
   "homepage": "http://strathausen.github.com/yamlmarkdown",
   "keywords": [
@@ -18,7 +18,8 @@
     }
   ],
   "scripts": {
-    "test": "make test"
+    "test": "make test",
+    "yamlmd2json": "node bin/yamlmd2json"
   },
   "engines": {
     "node": ">= 0.6.0"

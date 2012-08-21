@@ -1,0 +1,36 @@
+{
+"author": "Johann Philipp Strathausen <strathausen@gmail.com> (http://strathausen.eu)",
+  "name": "yamlmarkdown",
+  "description": "Yaml annotated markdown. Losely compatible to the nest django cms format.",
+  "version": "0.0.1",
+  "homepage": "http://strathausen.github.com/yamlmarkdown",
+  "keywords": [
+    "yaml","ghm","markdown"
+    ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com/strathausen/yamlmarkdown.git"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/jashkenas/coffee-script/raw/master/LICENSE"
+    }
+  ],
+  "scripts": {
+    "test": "make test"
+  },
+  "engines": {
+    "node": ">= 0.6.0"
+  },
+  "dependencies": {
+    "underscore": "~1.3.3",
+    "yamljs": "~0.1.1",
+    "ghm": "~1.0.0-3"
+  },
+  "devDependencies": {
+    "mocha": "~1.3.2",
+    "coffee-script": "~1.3.1"
+  },
+  "optionalDependencies": {}
+}

@@ -6,7 +6,7 @@ creates properties content and metadata from the yaml file
 
 @author johann philipp strathausen <strathausen@gmail.com>
 */
-var YamlMarkdown, YamlMarkdownDocument, ghm, yaml, _,
+var YamlMd, YamlMdDocument, buffer, ghm, yaml, yamlMd, _,
   __slice = Array.prototype.slice;
 
 _ = require('underscore');
@@ -15,30 +15,30 @@ yaml = require('yamljs');
 
 ghm = require('ghm');
 
-YamlMarkdownDocument = (function() {
+YamlMdDocument = (function() {
 
-  function YamlMarkdownDocument(properties) {
+  function YamlMdDocument(properties) {
     _.extend(this, properties);
   }
 
-  return YamlMarkdownDocument;
+  return YamlMdDocument;
 
 })();
 
-YamlMarkdown = (function() {
+YamlMd = (function() {
 
-  function YamlMarkdown() {}
+  function YamlMd() {}
 
-  YamlMarkdown.prototype.parse = function(content, properties) {
+  YamlMd.prototype.parse = function(content, properties) {
     var data, head, tail, _ref;
     if (properties == null) properties = {};
     _ref = content.split('\n\n'), head = _ref[0], tail = 2 <= _ref.length ? __slice.call(_ref, 1) : [];
     data = yaml.parse(head);
     data.html = ghm.parse(tail.join('\n\n'));
-    return new YamlMarkdownDocument(_.defaults(properties, data));
+    return new YamlMdDocument(_.defaults(properties, data));
   };
 
-  YamlMarkdown.prototype.reader = function(fname, cb) {
+  YamlMd.prototype.reader = function(fname, cb) {
     var _this = this;
     return fs.readFile(path.join(blog.dir, fname), 'utf8', function(err, content) {
       return cb(err, _this.parse(content, {
@@ -47,8 +47,22 @@ YamlMarkdown = (function() {
     });
   };
 
-  return YamlMarkdown;
+  return YamlMd;
 
 })();
 
-module.exports = new YamlMarkdown;
+module.exports = new YamlMd;
+
+yamlMd = require('./yamlMd');
+
+buffer = [];
+
+process.stdin.resume();
+
+process.stdin.on('data', function(chunk) {
+  return buffer.push(chunk);
+});
+
+process.stdin.on('end', function() {
+  return process.stdout.write(JSON.stringify(yamlMd.parse(buffer.join(''))));
+});

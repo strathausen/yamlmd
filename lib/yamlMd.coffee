@@ -12,10 +12,10 @@ yaml    = require 'yamljs'
 ghm     = require 'ghm'
 
 # Have a nice name for it!
-class YamlMarkdownDocument
+class YamlMdDocument
   constructor: (properties) -> _.extend this, properties
 
-class YamlMarkdown
+class YamlMd
   parse: (content, properties={}) ->
     # split file content into yaml and markdown part
     [ head, tail... ] = content.split '\n\n'
@@ -24,7 +24,7 @@ class YamlMarkdown
     # parse markdown part and render to html (content)
     data.html = ghm.parse tail.join '\n\n'
     # deliver the freshly baken article object
-    new YamlMarkdownDocument _.defaults properties, data
+    new YamlMdDocument _.defaults properties, data
 
   # read a file's content
   # split into yaml and markdown part separated by two newlines \n\n
@@ -33,4 +33,4 @@ class YamlMarkdown
     fs.readFile (path.join blog.dir, fname), 'utf8', (err, content) =>
       cb err, @parse content, id: fname
 
-module.exports = new YamlMarkdown
+module.exports = new YamlMd

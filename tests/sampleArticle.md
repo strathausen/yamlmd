@@ -9,8 +9,9 @@ indexed: true
 
 I may present.
 
-    #!coffee
-    Some code
-    Yeah.
+```coffee
+Some code
+Yeah.
+```
 
 ## Nu?

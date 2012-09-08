@@ -23,14 +23,13 @@
     "test": "make test"
   },
   "bin": {
-    "yamlmd2json": "node bin/yamlmd2json"
+    "yamlmd2json": "node bin/yamlmd2json.js"
   },
   "engines": {
     "node": ">= 0.6.0"
   },
   "dependencies": {
     "underscore": "~1.3.3",
-    "yamljs": "http://github.com/strathausen/yaml.js/tarball/master",
     "ghm": "~1.0.0-3",
     "assert": "~0.4.9",
     "commander": "~1.0.2",

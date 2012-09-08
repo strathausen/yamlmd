@@ -6,19 +6,22 @@ creates properties content and metadata from the yaml file
 
 @author johann philipp strathausen <strathausen@gmail.com>
 */
-var YamlMd, YamlMdDocument, buffer, ghm, yaml, yamlMd, _,
+var YamlMd, YamlMdDocument, ghm, mapStream, yaml, _,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __slice = Array.prototype.slice;
 
 _ = require('underscore');
 
-yaml = require('yamljs');
+yaml = require('yaml');
 
 ghm = require('ghm');
 
+mapStream = require('map-stream');
+
 YamlMdDocument = (function() {
 
-  function YamlMdDocument(properties) {
-    _.extend(this, properties);
+  function YamlMdDocument(defaults) {
+    _.extend(this, defaults);
   }
 
   return YamlMdDocument;
@@ -27,18 +30,22 @@ YamlMdDocument = (function() {
 
 YamlMd = (function() {
 
-  function YamlMd() {}
+  function YamlMd() {
+    this.stream = __bind(this.stream, this);
+    this.readFile = __bind(this.readFile, this);
+  }
 
-  YamlMd.prototype.parse = function(content, properties) {
-    var data, head, tail, _ref;
-    if (properties == null) properties = {};
+  YamlMd.prototype.parse = function(content, defaults) {
+    var data, head, tail, yamlDoc, _ref;
+    if (defaults == null) defaults = {};
     _ref = content.split('\n\n'), head = _ref[0], tail = 2 <= _ref.length ? __slice.call(_ref, 1) : [];
-    data = yaml.parse(head);
+    yamlDoc = '---\n  ' + (head.replace(/\n/g, '\n  ')) + '\n';
+    data = yaml.eval(yamlDoc);
     data.html = ghm.parse(tail.join('\n\n'));
-    return new YamlMdDocument(_.defaults(properties, data));
+    return new YamlMdDocument(_.defaults(defaults, data));
   };
 
-  YamlMd.prototype.reader = function(fname, cb) {
+  YamlMd.prototype.readFile = function(fname, cb) {
     var _this = this;
     return fs.readFile(path.join(blog.dir, fname), 'utf8', function(err, content) {
       return cb(err, _this.parse(content, {
@@ -47,22 +54,15 @@ YamlMd = (function() {
     });
   };
 
+  YamlMd.prototype.stream = function(defaults) {
+    var _this = this;
+    return mapStream(function(content, cb) {
+      return cb(null, _this.parse(content.toString(), defaults));
+    });
+  };
+
   return YamlMd;
 
 })();
 
 module.exports = new YamlMd;
-
-yamlMd = require('./yamlMd');
-
-buffer = [];
-
-process.stdin.resume();
-
-process.stdin.on('data', function(chunk) {
-  return buffer.push(chunk);
-});
-
-process.stdin.on('end', function() {
-  return process.stdout.write(JSON.stringify(yamlMd.parse(buffer.join(''))));
-});

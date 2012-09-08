@@ -7,7 +7,7 @@ See `yamlmd2json --help` for details
 ###
 
 program   = require 'commander'
-yamlMd    = require './yamlMd'
+yamlMd    = require '../'
 mapStream = require 'map-stream'
 path      = require 'path'
 fs        = require 'fs'
@@ -18,6 +18,7 @@ program
   .description('Convert yaml annotated markdown to JSON. The markdown part will
     be converted to HTML. Uses stdin or a specified file as input.
       If the data is provided by a file, the base file name will be used as a default for the "id" property for the document.')
+  .version('0.0.1')
   .option('-j, --json <json-data>', 'json data as default properties')
   .option('-f, --file <filename>', 'yaml annotated document ')
   .option('-i, --id <id>', 'the "id" property of the document')

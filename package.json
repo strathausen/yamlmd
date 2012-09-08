@@ -7,7 +7,8 @@
   "keywords": [
     "yaml",
     "ghm",
-    "markdown"
+    "markdown",
+    "json"
   ],
   "repository": {
     "type": "git",
@@ -23,7 +24,7 @@
     "test": "make test"
   },
   "bin": {
-    "yamlmd2json": "node bin/yamlmd2json.js"
+    "yamlmd2json": "./bin/yamlmd2json.js"
   },
   "engines": {
     "node": ">= 0.6.0"

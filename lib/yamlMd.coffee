@@ -20,10 +20,13 @@ class YamlMd
   parse: (content, defaults={}) ->
     # split file content into yaml and markdown part
     [ head, tail... ] = content.split '\n\n'
+    # create valid yaml doc
+    yamlDoc = '---\n  ' + (head.replace /\n/g, '\n  ') + '\n'
     # parse yaml part (metadata)
-    data = yaml.eval head
+    data = yaml.eval yamlDoc
     # parse markdown part and render to html (content)
     data.html = ghm.parse tail.join '\n\n'
+    #data.date = mom
     # deliver the freshly baken article object
     new YamlMdDocument _.defaults defaults, data
 

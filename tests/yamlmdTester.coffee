@@ -31,15 +31,16 @@ describe 'yamlMd', ->
     assert typeof id is 'string'
     assert id.length > 0
 
-  it 'document should have id as string', ->
-    { id } = document
-    assert typeof id is 'string'
-    assert id.length > 0
+  it 'document should have date as string', ->
+    { date } = document
+    assert typeof date is 'string'
+    assert date.length > 0
 
 describe 'yamlMdToJson', ->
   it 'pipe through, json property', (done) ->
     command =
-      "cat #{__dirname}/sampleArticle.md | coffee #{__dirname}/../lib/yamlMdToJson.coffee
+      "cat #{__dirname}/sampleArticle.md |
+      coffee #{__dirname}/../lib/yamlMdToJson.coffee
       --json '{\"id\":\"sampleArticle\"}'"
     exec command, (err, stdout, stderr) ->
       dokiment = JSON.parse stdout
@@ -48,7 +49,8 @@ describe 'yamlMdToJson', ->
 
   it 'pipe through, id property', (done) ->
     command =
-      "cat #{__dirname}/sampleArticle.md | coffee #{__dirname}/../lib/yamlMdToJson.coffee
+      "cat #{__dirname}/sampleArticle.md |
+      coffee #{__dirname}/../lib/yamlMdToJson.coffee
       --id sampleArticle"
     exec command, (err, stdout, stderr) ->
       dokiment = JSON.parse stdout

@@ -9,7 +9,6 @@ dokiment    = {}
 describe 'yamlMd', ->
   it 'should parse file content to document object', ->
     document = yamlMardown.parse rawData, id: 'sampleArticle'
-    console.error document
     assert.equal typeof document, 'object'
 
   it 'document should have title as string', ->

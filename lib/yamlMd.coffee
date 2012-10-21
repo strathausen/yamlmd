@@ -7,9 +7,9 @@ Creates properties content and metadata from the yaml file
 @author Johann Philipp Strathausen <strathausen@gmail.com>
 
 ###
-_       = require 'underscore'
-yaml    = require 'yaml'
-ghm     = require 'github-flavored-markdown'
+_         = require 'underscore'
+yaml      = require 'yaml'
+md        = require 'marked'
 mapStream = require 'map-stream'
 
 # Have a nice name for it!
@@ -25,7 +25,7 @@ class YamlMd
     # parse yaml part (metadata)
     data = yaml.eval yamlDoc
     # parse markdown part and render to html (content)
-    data.html = ghm.parse tail.join '\n\n'
+    data.html = md.parse tail.join '\n\n'
     #data.date = mom
     # deliver the freshly baken article object
     new YamlMdDocument _.defaults defaults, data
@@ -41,5 +41,9 @@ class YamlMd
   # @argument defaultData will be used as default data
   stream: (defaults) => mapStream (content, cb) =>
     cb null, @parse content.toString(), defaults
+
+  # for configuration of the marked module
+  # see npm marked for details
+  marked: md
 
 module.exports = new YamlMd

@@ -8,7 +8,7 @@ Creates properties content and metadata from the yaml file
 @author Johann Philipp Strathausen <strathausen@gmail.com>
 */
 
-var YamlMd, YamlMdDocument, ghm, mapStream, yaml, _,
+var YamlMd, YamlMdDocument, mapStream, md, yaml, _,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __slice = [].slice;
 
@@ -16,7 +16,7 @@ _ = require('underscore');
 
 yaml = require('yaml');
 
-ghm = require('github-flavored-markdown');
+md = require('marked');
 
 mapStream = require('map-stream');
 
@@ -47,7 +47,7 @@ YamlMd = (function() {
     _ref = content.split('\n\n'), head = _ref[0], tail = 2 <= _ref.length ? __slice.call(_ref, 1) : [];
     yamlDoc = '---\n  ' + (head.replace(/\n/g, '\n  ')) + '\n';
     data = yaml["eval"](yamlDoc);
-    data.html = ghm.parse(tail.join('\n\n'));
+    data.html = md.parse(tail.join('\n\n'));
     return new YamlMdDocument(_.defaults(defaults, data));
   };
 
@@ -66,6 +66,8 @@ YamlMd = (function() {
       return cb(null, _this.parse(content.toString(), defaults));
     });
   };
+
+  YamlMd.prototype.marked = md;
 
   return YamlMd;
 

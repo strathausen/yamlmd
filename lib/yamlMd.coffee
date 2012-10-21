@@ -9,7 +9,7 @@ Creates properties content and metadata from the yaml file
 ###
 _       = require 'underscore'
 yaml    = require 'yaml'
-ghm     = require 'ghm'
+ghm     = require 'github-flavored-markdown'
 mapStream = require 'map-stream'
 
 # Have a nice name for it!

@@ -1,10 +1,10 @@
 ###
 
-loading yaml-markdowny files from disk into an article model
+Loading yaml-markdowny files from disk into an article model
 
-creates properties content and metadata from the yaml file
+Creates properties content and metadata from the yaml file
 
-@author johann philipp strathausen <strathausen@gmail.com>
+@author Johann Philipp Strathausen <strathausen@gmail.com>
 
 ###
 _       = require 'underscore'

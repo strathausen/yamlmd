@@ -10,6 +10,17 @@ Creates properties content and metadata from the yaml file
 _         = require 'underscore'
 yaml      = require 'yaml'
 md        = require 'marked'
+hljs      = require 'highlight.js'
+md.setOptions highlight: (code, lang) ->
+  lang = 'javascript' if lang is 'js'
+  lang = 'coffeescript' if /coffee/.test lang
+  return code unless lang
+  # highlight.js can easily crash sometimes
+  try
+    hljs.highlight(lang, code).value
+  catch e
+    code
+
 mapStream = require 'map-stream'
 
 # Have a nice name for it!
@@ -26,7 +37,6 @@ class YamlMd
     data = yaml.eval yamlDoc
     # parse markdown part and render to html (content)
     data.html = md.parse tail.join '\n\n'
-    #data.date = mom
     # deliver the freshly baken article object
     new YamlMdDocument _.defaults defaults, data
 
@@ -41,9 +51,5 @@ class YamlMd
   # @argument defaultData will be used as default data
   stream: (defaults) => mapStream (content, cb) =>
     cb null, @parse content.toString(), defaults
-
-  # for configuration of the marked module
-  # see npm marked for details
-  marked: md
 
 module.exports = new YamlMd

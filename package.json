@@ -2,7 +2,7 @@
   "author": "Johann Philipp Strathausen <strathausen@gmail.com> (http://strathausen.eu)",
   "name": "yamlmd",
   "description": "Yaml annotated markdown. A subset of the nest django cms format.",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "homepage": "http://strathausen.github.com/yamlmd",
   "keywords": [
     "yaml",
@@ -35,7 +35,8 @@
     "commander": "~1.0.2",
     "yaml": "~0.2.3",
     "map-stream": "0.0.1",
-    "marked": "~0.2.5"
+    "marked": "~0.2.5",
+    "highlight.js": "~7.3.0"
   },
   "devDependencies": {
     "assert": "~0.4.9",

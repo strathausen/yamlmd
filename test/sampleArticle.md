@@ -9,9 +9,17 @@ indexed: true
 
 I may present.
 
-```coffee
-Some code
-Yeah.
+``` coffee
+x = 0
+```
+
+``` js
+var x = 0;
+```
+
+``` python
+def funktion(foo):
+    x = 0;
 ```
 
 ## Nu?
